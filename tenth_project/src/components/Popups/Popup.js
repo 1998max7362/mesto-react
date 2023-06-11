@@ -1,5 +1,5 @@
 export const Popup = ({name, children, isOpen, onClose}) => {
-
+  
 
 
   return (

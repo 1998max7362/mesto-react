@@ -1,51 +1,58 @@
+import { useState } from "react";
 import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
-import { Popup } from "./components/Popup";
-import { PopupWithForm } from "./components/PopupWithForm ";
-import { useState } from "react";
+import { PopupWithForm } from "./components/Popups/PopupWithForm";
+import { ImagePopup } from "./components/Popups/ImagePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
-    addKeyDownListener()
+    addKeyDownListener();
   };
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
-    addKeyDownListener()
+    addKeyDownListener();
   };
 
   const handleAddPlaceClick = () => {
     setAddPlacePopupOpen(true);
-    addKeyDownListener()
+    addKeyDownListener();
   };
 
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    removeKeyDownListener()
+    setSelectedCard({});
+    removeKeyDownListener();
+  };
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    addKeyDownListener();
   };
 
   const handleEscClose = (evt) => {
     if (evt.key === "Escape") {
-      closeAllPopups()
+      closeAllPopups();
     }
   };
 
-  const addKeyDownListener = () =>{
-    document.addEventListener('keydown', handleEscClose)
-  }
+  const addKeyDownListener = () => {
+    document.addEventListener("keydown", handleEscClose);
+  };
 
-  const removeKeyDownListener = () =>{
-    document.removeEventListener('keydown', handleEscClose)
-  }
+  const removeKeyDownListener = () => {
+    document.removeEventListener("keydown", handleEscClose);
+  };
 
   return (
     <div className="body">
@@ -55,33 +62,10 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
-
-        <template id="element">
-          <div className="element">
-            <img className="element__img" alt="Заглушка" />
-            <div className="element__info">
-              <h2 className="element__name">Заглушка (название места)</h2>
-              <div>
-                <button
-                  className="element__like-button"
-                  aria-label="Кнопка лайк"
-                  type="button"
-                  value=" "
-                ></button>
-                <p className="element__like-counter"></p>
-              </div>
-            </div>
-            <button
-              className="element__remove-button"
-              aria-label="Кнопка удалить"
-              type="button"
-              value=" "
-            ></button>
-          </div>
-        </template>
-
+        <template id="element"></template>
         <PopupWithForm
           name={"approve"}
           title={"Вы уверены?"}
@@ -89,7 +73,6 @@ function App() {
           isOpen={false}
           onClose={closeAllPopups}
         ></PopupWithForm>
-
         <PopupWithForm
           name={"profile"}
           title={"Редактировать профиль"}
@@ -127,7 +110,6 @@ function App() {
             <span className="form__input-error " id="Job-input-error"></span>
           </div>
         </PopupWithForm>
-
         <PopupWithForm
           name={"avatar"}
           title={"Обновить аватар"}
@@ -148,10 +130,11 @@ function App() {
             <span
               className="form__input-error"
               id="avatar-source_link-input-error"
-            ></span>
+            >
+              {" "}
+            </span>
           </div>
         </PopupWithForm>
-
         <PopupWithForm
           name={"card"}
           title={"Новое место"}
@@ -171,10 +154,9 @@ function App() {
               minLength="2"
               maxLength="30"
             />
-            <span
-              className="form__input-error"
-              id="place_name-input-error"
-            ></span>
+            <span className="form__input-error" id="place_name-input-error">
+              {" "}
+            </span>
             <input
               className="form__input form__input_el_second"
               placeholder="Ссылка на картинку"
@@ -184,19 +166,18 @@ function App() {
               required
               aria-label="Ссылка на картинку"
             />
-            <span
-              className="form__input-error"
-              id="source_link-input-error"
-            ></span>
+            <span className="form__input-error" id="source_link-input-error">
+              {" "}
+            </span>
           </div>
         </PopupWithForm>
-
-        <Popup name={"img"} isOpen={false} onClose={closeAllPopups}>
-          <figure className="img-container">
-            <img className="img-container__img" alt="Заглушка" />
-            <figcaption className="img-container__caption"></figcaption>
-          </figure>
-        </Popup>
+        ImagePopup
+        <ImagePopup
+          name={"img"}
+          isOpen={!!Object.keys(selectedCard).length}
+          onClose={closeAllPopups}
+          card={selectedCard}
+        />
       </div>
     </div>
   );

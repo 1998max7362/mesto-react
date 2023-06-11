@@ -1,26 +1,42 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
+import { Card } from "./Card";
 
-export const Main = ({onEditProfile, onAddPlace, onEditAvatar}) => {
-  const [userData, setUserData] = useState({})
+export const Main = ({ onEditProfile, onAddPlace, onEditAvatar,onCardClick }) => {
+  const [userData, setUserData] = useState({});
+  const [cards, setCards] = useState([]);
 
-  useEffect(() =>{
-    (async ()=>{
-      try{
-        const userData = await api.getUserData()
-        setUserData(userData)
+  useEffect(() => {
+    (async () => {
+      try {
+        const userData = await api.getUserData();
+        setUserData(userData);
+      } catch (err) {
+        console.log(err);
       }
-      catch (err) {
-        console.log(err)
+    })();
+  }, [setUserData]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const userData = await api.getInitialCards();
+        setCards(userData);
+      } catch (err) {
+        console.log(err);
       }
-    })()
-  },[setUserData])
+    })();
+  }, [setCards]);
 
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img src={userData.avatar} className="profile__avatar" alt="Ваша аватарка" />
+          <img
+            src={userData.avatar}
+            className="profile__avatar"
+            alt="Ваша аватарка"
+          />
           <button
             type="button"
             aria-label="edit-avatar"
@@ -49,10 +65,16 @@ export const Main = ({onEditProfile, onAddPlace, onEditAvatar}) => {
         ></button>
       </section>
 
-      <section
-        className="elements"
-        aria-label="Картиночки красивых мест"
-      ></section>
+      <section className="elements" aria-label="Картиночки красивых мест">
+
+        {cards.map((card) =>
+        <Card key={card._id} 
+        name={card.name}
+        link={card.link}
+        onCardClick={()=>onCardClick(card)}
+        />)}
+
+      </section>
     </main>
   );
 };
