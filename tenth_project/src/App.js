@@ -38,136 +38,106 @@ function App() {
         </template>
 
         <PopupWithForm
-        name={'approve'}
-        title={'Вы уверены?'}
-        submitButtonText={'Сохранить'}
+          name={"approve"}
+          title={"Вы уверены?"}
+          submitButtonText={"Да"}
         ></PopupWithForm>
 
-        {/* <Popup name="approve">
-          <form className="form" name="approve" id="approve" noValidate>
-            <h2 className="form__name">Вы уверены?</h2>
-            <button
-              type="submit"
-              className="form__save-button"
-              aria-label="Сохранить"
-            >
-              Да
-            </button>
-          </form>
-        </Popup> */}
+        <PopupWithForm
+          name={"profile"}
+          title={"Редактировать профиль"}
+          submitButtonText={"Сохранить"}
+        >
+          <div className="form__input-container">
+            <input
+              className="form__input form__input_el_first"
+              placeholder="Имя"
+              id="profile_name"
+              type="text"
+              name="name"
+              aria-label="Имя"
+              required
+              minLength="2"
+              maxLength="40"
+            />
+            <span
+              className="form__input-error"
+              id="profile_name-input-error"
+            ></span>
+            <input
+              className="form__input form__input_el_second"
+              placeholder="Предназначение"
+              id="Job"
+              type="text"
+              name="about"
+              aria-label="Предназначение"
+              required
+              minLength="2"
+              maxLength="200"
+            />
+            <span className="form__input-error " id="Job-input-error"></span>
+          </div>
+        </PopupWithForm>
 
-        <Popup name="profile">
-          <form className="form" name="name&job-form" id="name-job" noValidate>
-            <h2 className="form__name">Редактировать профиль</h2>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_el_first"
-                placeholder="Имя"
-                id="profile_name"
-                type="text"
-                name="name"
-                aria-label="Имя"
-                required
-                minLength="2"
-                maxLength="40"
-              />
-              <span
-                className="form__input-error"
-                id="profile_name-input-error"
-              ></span>
-              <input
-                className="form__input form__input_el_second"
-                placeholder="Предназначение"
-                id="Job"
-                type="text"
-                name="about"
-                aria-label="Предназначение"
-                required
-                minLength="2"
-                maxLength="200"
-              />
-              <span className="form__input-error " id="Job-input-error"></span>
-            </div>
-            <button
-              type="submit"
-              className="form__save-button"
-              aria-label="Сохранить"
-            >
-              Сохранить
-            </button>
-          </form>
-        </Popup>
+        <PopupWithForm
+          name={"avatar"}
+          title={"Обновить аватар"}
+          submitButtonText={"Сохранить"}
+        >
+          <div className="form__input-container">
+            <input
+              className="form__input form__input_el_second"
+              placeholder="Ссылка на картинку"
+              id="avatar-source_link"
+              type="url"
+              name="avatar"
+              required
+              aria-label="Ссылка на картинку"
+            />
+            <span
+              className="form__input-error"
+              id="avatar-source_link-input-error"
+            ></span>
+          </div>
+        </PopupWithForm>
 
-        <Popup name={"avatar"}>
-          <form className="form" name="avatar-form" id="avatar" noValidate>
-            <h2 className="form__name">Обновить аватар</h2>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_el_second"
-                placeholder="Ссылка на картинку"
-                id="avatar-source_link"
-                type="url"
-                name="avatar"
-                required
-                aria-label="Ссылка на картинку"
-              />
-              <span
-                className="form__input-error"
-                id="avatar-source_link-input-error"
-              ></span>
-            </div>
-            <button
-              type="submit"
-              className="form__save-button"
-              aria-label="Сохранить"
-            >
-              Сохранить
-            </button>
-          </form>
-        </Popup>
+        <PopupWithForm
+          name={"card"}
+          title={"Новое место"}
+          submitButtonText={"Создать"}
+        >
+          <div className="form__input-container">
+            <input
+              className="form__input form__input_el_first"
+              placeholder="Название"
+              id="place_name"
+              type="text"
+              name="name"
+              aria-label="Название"
+              required
+              minLength="2"
+              maxLength="30"
+            />
+            <span
+              className="form__input-error"
+              id="place_name-input-error"
+            ></span>
+            <input
+              className="form__input form__input_el_second"
+              placeholder="Ссылка на картинку"
+              id="source_link"
+              type="url"
+              name="link"
+              required
+              aria-label="Ссылка на картинку"
+            />
+            <span
+              className="form__input-error"
+              id="source_link-input-error"
+            ></span>
+          </div>
+        </PopupWithForm>
 
-        <Popup name={"card"}>
-          <form className="form" name="place-form" id="place" noValidate>
-            <h2 className="form__name">Новое место</h2>
-            <div className="form__input-container">
-              <input
-                className="form__input form__input_el_first"
-                placeholder="Название"
-                id="place_name"
-                type="text"
-                name="name"
-                aria-label="Название"
-                required
-                minLength="2"
-                maxLength="30"
-              />
-              <span
-                className="form__input-error"
-                id="place_name-input-error"
-              ></span>
-              <input
-                className="form__input form__input_el_second"
-                placeholder="Ссылка на картинку"
-                id="source_link"
-                type="url"
-                name="link"
-                required
-                aria-label="Ссылка на картинку"
-              />
-              <span
-                className="form__input-error"
-                id="source_link-input-error"
-              ></span>
-            </div>
-            <button
-              type="submit"
-              className="form__save-button"
-              aria-label="Создать"
-            >
-              Создать
-            </button>
-          </form>
-        </Popup>
 
         <Popup name={"img"}>
           <figure className="img-container">
@@ -175,6 +145,7 @@ function App() {
             <figcaption className="img-container__caption"></figcaption>
           </figure>
         </Popup>
+
       </div>
     </div>
   );

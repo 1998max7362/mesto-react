@@ -1,3 +1,6 @@
+import { Popup } from "./Popup";
+
+
 export const PopupWithForm = ({ name, title, submitButtonText, children }) => {
   return (
     <Popup name={name}>
