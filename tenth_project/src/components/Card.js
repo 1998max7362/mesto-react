@@ -11,7 +11,7 @@ export const Card = ({name,link, onCardClick}) => {
             className="element__like-button"
             aria-label="Кнопка лайк"
             type="button"
-            value=" "
+            // value=" "
           ></button>
           <p className="element__like-counter"></p>
         </div>
@@ -20,7 +20,7 @@ export const Card = ({name,link, onCardClick}) => {
         className="element__remove-button"
         aria-label="Кнопка удалить"
         type="button"
-        value=" "
+        // value=" "
       ></button>
     </div>
   );
