@@ -1,9 +1,9 @@
 import { Popup } from "./Popup";
 
 
-export const PopupWithForm = ({ name, title, submitButtonText, children }) => {
+export const PopupWithForm = ({ name, title, submitButtonText, children, isOpen, onClose}) => {
   return (
-    <Popup name={name}>
+    <Popup name={name} isOpen={isOpen} onClose={onClose}>
       <form className="form" name={name} noValidate>
         <h2 className="form__name">{title}</h2>
         {children}

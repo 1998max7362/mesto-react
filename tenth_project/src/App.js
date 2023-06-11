@@ -4,13 +4,58 @@ import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
 import { Popup } from "./components/Popup";
 import { PopupWithForm } from "./components/PopupWithForm ";
+import { useState } from "react";
 
 function App() {
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+
+  const handleEditAvatarClick = () => {
+    setEditAvatarPopupOpen(true);
+    addKeyDownListener()
+  };
+
+  const handleEditProfileClick = () => {
+    setEditProfilePopupOpen(true);
+    addKeyDownListener()
+  };
+
+  const handleAddPlaceClick = () => {
+    setAddPlacePopupOpen(true);
+    addKeyDownListener()
+  };
+
+  const closeAllPopups = () => {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    removeKeyDownListener()
+  };
+
+  const handleEscClose = (evt) => {
+    if (evt.key === "Escape") {
+      closeAllPopups()
+    }
+  };
+
+  const addKeyDownListener = () =>{
+    document.addEventListener('keydown', handleEscClose)
+  }
+
+  const removeKeyDownListener = () =>{
+    document.removeEventListener('keydown', handleEscClose)
+  }
+
   return (
     <div className="body">
       <div className="page">
         <Header />
-        <Main />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+        />
         <Footer />
 
         <template id="element">
@@ -41,12 +86,16 @@ function App() {
           name={"approve"}
           title={"Вы уверены?"}
           submitButtonText={"Да"}
+          isOpen={false}
+          onClose={closeAllPopups}
         ></PopupWithForm>
 
         <PopupWithForm
           name={"profile"}
           title={"Редактировать профиль"}
           submitButtonText={"Сохранить"}
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
         >
           <div className="form__input-container">
             <input
@@ -83,6 +132,8 @@ function App() {
           name={"avatar"}
           title={"Обновить аватар"}
           submitButtonText={"Сохранить"}
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
         >
           <div className="form__input-container">
             <input
@@ -105,6 +156,8 @@ function App() {
           name={"card"}
           title={"Новое место"}
           submitButtonText={"Создать"}
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
         >
           <div className="form__input-container">
             <input
@@ -138,14 +191,12 @@ function App() {
           </div>
         </PopupWithForm>
 
-
-        <Popup name={"img"}>
+        <Popup name={"img"} isOpen={false} onClose={closeAllPopups}>
           <figure className="img-container">
             <img className="img-container__img" alt="Заглушка" />
             <figcaption className="img-container__caption"></figcaption>
           </figure>
         </Popup>
-
       </div>
     </div>
   );

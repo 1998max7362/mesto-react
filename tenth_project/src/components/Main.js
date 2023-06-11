@@ -1,16 +1,6 @@
-export const Main = () => {
+export const Main = ({onEditProfile, onAddPlace, onEditAvatar}) => {
 
-  const handleEditAvatarClick = () =>{
-    document.querySelector('.popup_type_avatar').classList.add('popup_opened')
-  }
 
-  const handleEditProfileClick = () =>{
-    document.querySelector('.popup_type_profile').classList.add('popup_opened')
-  }
-
-  const handleAddPlaceClick = () =>{
-    document.querySelector('.popup_type_card').classList.add('popup_opened')
-  }
 
 
   return (
@@ -22,7 +12,7 @@ export const Main = () => {
             type="button"
             aria-label="edit-avatar"
             className="profile__avatar-edit-button"
-            onClick={handleEditAvatarClick}
+            onClick={onEditAvatar}
           ></button>
         </div>
         <div className="profile__info">
@@ -32,7 +22,7 @@ export const Main = () => {
               type="button"
               className="profile__edit-button"
               aria-label="Кнопка редактировать"
-              onClick={handleEditProfileClick}
+              onClick={onEditProfile}
             ></button>
           </div>
           <p className="profile__job">Исследователь океана</p>
@@ -42,7 +32,7 @@ export const Main = () => {
           className="profile__add-button"
           aria-label="Кнопка добавить"
           value=" "
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlace}
         ></button>
       </section>
 
