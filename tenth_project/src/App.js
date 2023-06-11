@@ -130,9 +130,7 @@ function App() {
             <span
               className="form__input-error"
               id="avatar-source_link-input-error"
-            >
-              {" "}
-            </span>
+            ></span>
           </div>
         </PopupWithForm>
         <PopupWithForm
@@ -154,9 +152,10 @@ function App() {
               minLength="2"
               maxLength="30"
             />
-            <span className="form__input-error" id="place_name-input-error">
-              {" "}
-            </span>
+            <span
+              className="form__input-error"
+              id="place_name-input-error"
+            ></span>
             <input
               className="form__input form__input_el_second"
               placeholder="Ссылка на картинку"
@@ -166,9 +165,10 @@ function App() {
               required
               aria-label="Ссылка на картинку"
             />
-            <span className="form__input-error" id="source_link-input-error">
-              {" "}
-            </span>
+            <span
+              className="form__input-error"
+              id="source_link-input-error"
+            ></span>
           </div>
         </PopupWithForm>
         ImagePopup
