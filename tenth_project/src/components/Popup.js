@@ -1,4 +1,6 @@
 export const Popup = ({name, children}) => {
+
+
   return (
     <div className={`popup popup_type_${name}`}  >
       <div className="popup__container">
@@ -7,7 +9,7 @@ export const Popup = ({name, children}) => {
           className="popup__close-button"
           aria-label="Close"
         ></button>
-        {children!==undefined&&children}
+        {children}
       </div>
     </div>
   );

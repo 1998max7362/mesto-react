@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
 import { Popup } from "./components/Popup";
+import { PopupWithForm } from "./components/PopupWithForm ";
 
 function App() {
   return (
@@ -36,7 +37,13 @@ function App() {
           </div>
         </template>
 
-        <Popup name="approve">
+        <PopupWithForm
+        name={'approve'}
+        title={'Вы уверены?'}
+        submitButtonText={'Сохранить'}
+        ></PopupWithForm>
+
+        {/* <Popup name="approve">
           <form className="form" name="approve" id="approve" noValidate>
             <h2 className="form__name">Вы уверены?</h2>
             <button
@@ -47,7 +54,7 @@ function App() {
               Да
             </button>
           </form>
-        </Popup>
+        </Popup> */}
 
         <Popup name="profile">
           <form className="form" name="name&job-form" id="name-job" noValidate>
