@@ -15,6 +15,8 @@ export const AddPlacePopup = ({isOpen, onClose, onAddPlaceSubmit}) => {
     e.preventDefault()
     onAddPlaceSubmit({name, link})
     onClose()
+    setName('')
+    setLink('')
   }
 
   return (

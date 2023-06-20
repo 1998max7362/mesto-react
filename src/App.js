@@ -10,11 +10,14 @@ import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import { EditProfilePopup } from "./components/Popups/EditProfilePopup";
 import { EditAvatarPopup } from "./components/Popups/EditAvatarPopup";
 import { AddPlacePopup } from "./components/Popups/AddPlacePopup";
+import { ApprovePopup } from "./components/Popups/ApprovePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isApprovePopupOpen, setApprovePopupOpen] = useState(false);
+  const [approveCallback, setApproveCallback] = useState(() => {});
   const [selectedCard, setSelectedCard] = useState({});
 
   const [currentUserInfo, setCurrentUserInfo] = useState({});
@@ -54,7 +57,12 @@ function App() {
     }
   };
 
-  const handleCardDelete = async (card) => {
+  const handleCardDelete = (card) => {
+    setApproveCallback((oldCallback) => ()=>{handleCardDeleteApproved(card)})
+    handleShowApprovePopup(true);
+  };
+
+  const handleCardDeleteApproved = async (card) => {
     try {
       const response = await api.deleteCard(card._id);
       if (response.message === "Пост удалён") {
@@ -85,14 +93,14 @@ function App() {
     }
   };
 
-  const handleAddPlaceSubmit = async (cardInfo) =>{
+  const handleAddPlaceSubmit = async (cardInfo) => {
     try {
       const newCard = await api.postCard(cardInfo);
-      setCards([newCard, ...cards])
+      setCards([newCard, ...cards]);
     } catch (err) {
       console.log("Не удалось добавить карточку", err);
     }
-  }
+  };
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -109,10 +117,16 @@ function App() {
     addKeyDownListener();
   };
 
+  const handleShowApprovePopup = () => {
+    setApprovePopupOpen(true);
+    addKeyDownListener();
+  };
+
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setApprovePopupOpen(false);
     setSelectedCard({});
     removeKeyDownListener();
   };
@@ -152,13 +166,11 @@ function App() {
           />
           <Footer />
           <template id="element"></template>
-          <PopupWithForm
-            name={"approve"}
-            title={"Вы уверены?"}
-            submitButtonText={"Да"}
-            isOpen={false}
+          <ApprovePopup
+            isOpen={isApprovePopupOpen}
             onClose={closeAllPopups}
-          ></PopupWithForm>
+            onApprove={approveCallback}
+          />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
