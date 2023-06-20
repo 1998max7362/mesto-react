@@ -152,7 +152,7 @@ function App() {
 
   return (
     <div className="body">
-      <div className="page">
+      <div className="page" onClick={(event)=>{if (event.target.id==='popup') closeAllPopups()} }>
         <CurrentUserContext.Provider value={currentUserInfo}>
           <Header />
           <Main
