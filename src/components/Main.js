@@ -1,39 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { api } from "../utils/Api";
 import { Card } from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export const Main = ({ onEditProfile, onAddPlace, onEditAvatar,onCardClick }) => {
-  const [userData, setUserData] = useState({});
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const userData = await api.getUserData();
-        setUserData(userData);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [setUserData]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const userData = await api.getInitialCards();
-        setCards(userData);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [setCards]);
-
+export const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) => {
+  const currentUserInfo = useContext(CurrentUserContext)
+  
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
           <img
-            src={userData.avatar}
+            src={currentUserInfo.avatar}
             className="profile__avatar"
             alt="Ваша аватарка"
           />
@@ -46,7 +24,7 @@ export const Main = ({ onEditProfile, onAddPlace, onEditAvatar,onCardClick }) =>
         </div>
         <div className="profile__info">
           <div className="profile__name-container">
-            <h1 className="profile__name">{userData.name}</h1>
+            <h1 className="profile__name">{currentUserInfo.name}</h1>
             <button
               type="button"
               className="profile__edit-button"
@@ -54,7 +32,7 @@ export const Main = ({ onEditProfile, onAddPlace, onEditAvatar,onCardClick }) =>
               onClick={onEditProfile}
             ></button>
           </div>
-          <p className="profile__job">{userData.about}</p>
+          <p className="profile__job">{currentUserInfo.about}</p>
         </div>
         <button
           type="button"
@@ -69,9 +47,10 @@ export const Main = ({ onEditProfile, onAddPlace, onEditAvatar,onCardClick }) =>
 
         {cards.map((card) =>
         <Card key={card._id} 
-        name={card.name}
-        link={card.link}
+        cardInfo = {card}
         onCardClick={()=>onCardClick(card)}
+        onCardLike={onCardLike}
+        onCardDelete={onCardDelete}
         />)}
 
       </section>

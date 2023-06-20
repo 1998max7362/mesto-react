@@ -65,21 +65,23 @@ class Api {
     return this._getResposeData(res);
   }
 
-  async likeCard(_id) {
-    const res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
-      headers: this.headers,
-      method: "PUT",
-    });
+  async changeLikeCardStatus(_id, newLikeStatus) {
+    let res
+    if (newLikeStatus){
+      res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
+        headers: this.headers,
+        method: "PUT",
+      });
+    }
+    else{
+      res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
+        headers: this.headers,
+        method: "DELETE",
+      });
+    }
     return this._getResposeData(res);
   }
 
-  async dislikeCard(_id) {
-    const res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
-      headers: this.headers,
-      method: "DELETE",
-    });
-    return this._getResposeData(res);
-  }
 
   async _getResposeData(res) {
     if (res.ok) {
