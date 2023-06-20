@@ -15,6 +15,6 @@ export const useValidatedState = (initaialState) => {
     }
   };
 
-  useEffect(()=> setStateWithValidation(initaialState),[componentRef])
+  useEffect(()=> setStateWithValidation(initaialState),[componentRef]) // Чтоб проверить сразу при первом рендере
   return [state, setStateWithValidation, error, componentRef];
 };
