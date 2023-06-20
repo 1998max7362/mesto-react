@@ -1,7 +1,7 @@
 import { Popup } from "./Popup";
 
 
-export const PopupWithForm = ({ name, title, submitButtonText, children, isOpen, onClose, onSubmit}) => {
+export const PopupWithForm = ({ name, title, submitButtonText, submitButtonActive,children, isOpen, onClose, onSubmit}) => {
   return (
     <Popup name={name} isOpen={isOpen} onClose={onClose}>
       <form className="form" name={name} onSubmit={onSubmit} noValidate>
@@ -9,8 +9,10 @@ export const PopupWithForm = ({ name, title, submitButtonText, children, isOpen,
         {children}
         <button
           type="submit"
-          className="form__save-button"
+          // className="form__save-button"
+          className={`form__save-button ${submitButtonActive&&'form__save-button_disabled'}`}
           aria-label="Сохранить"
+          disabled={submitButtonActive}
         >
           {submitButtonText}
         </button>
