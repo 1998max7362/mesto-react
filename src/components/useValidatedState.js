@@ -1,20 +1,24 @@
-import { useEffect, useRef, useState } from "react";
 
-export const useValidatedState = (initaialState) => {
-  const componentRef = useRef(initaialState);
-  const [error, setError] = useState('')
-  const [state, setState] = useState(initaialState);
+import {useState, useCallback} from 'react';
 
-  const setStateWithValidation = (value) => {
-    setState(value);
-    if (!componentRef.current.validity.valid) {
-      setError(componentRef.current.validationMessage)
-    }
-    else{
-      setError('')
-    }
+export function useFormAndValidation() {
+  const [ values, setValues ] = useState({});
+  const [ errors, setErrors ] = useState({});
+  const [ isValid, setIsValid ] = useState(true);
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setValues({...values, [name]: value });
+    setErrors({...errors, [name]: e.target.validationMessage});
+    setIsValid(e.target.closest('form').checkValidity());
   };
 
-  useEffect(()=> setStateWithValidation(initaialState),[componentRef]) // Чтоб проверить сразу при первом рендере
-  return [state, setStateWithValidation, error, componentRef];
-};
+  const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
+    setValues(newValues);
+    setErrors(newErrors);
+    setIsValid(newIsValid);
+  }, [setValues, setErrors, setIsValid]);
+
+  return { values, handleChange, errors, isValid, resetForm, setValues, setIsValid };
+}
+

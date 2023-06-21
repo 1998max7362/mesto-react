@@ -9,10 +9,9 @@ export const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   const currentUserInfo = useContext(CurrentUserContext);
 
   useEffect(() => {
-    // При первой загрузке currentUserInfo={} , поэтому инпуты становятся uncontrolled. Пишется warning в консоль.
     setName(currentUserInfo.name);
     setAbout(currentUserInfo.about);
-  }, [currentUserInfo]);
+  }, [currentUserInfo, isOpen]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -25,7 +24,6 @@ export const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onUpdateUser({ name, about });
-    onClose()
   };
 
   return (
@@ -48,7 +46,7 @@ export const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           required
           minLength="2"
           maxLength="40"
-          value={name}
+          value={name||''}
           onChange={handleNameChange}
         />
         <span
@@ -65,7 +63,7 @@ export const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           required
           minLength="2"
           maxLength="200"
-          value={about}
+          value={about||''}
           onChange={handelDescriptionChange}
         />
         <span className="form__input-error " id="Job-input-error"></span>

@@ -69,6 +69,7 @@ function App() {
         setCards((oldCards) =>
           oldCards.filter((oldCard) => oldCard._id !== card._id)
         );
+        closeAllPopups()
       }
     } catch (err) {
       console.log("Не удалось удалить карточку", err);
@@ -79,6 +80,7 @@ function App() {
     try {
       const newUserInfo = await api.patchUserData(userInfo);
       setCurrentUserInfo(newUserInfo);
+      closeAllPopups()
     } catch (err) {
       console.log("Не удалось изменить данные пользователя", err);
     }
@@ -88,15 +90,18 @@ function App() {
     try {
       const newUserInfo = await api.updateAvatar(avatarLink);
       setCurrentUserInfo(newUserInfo);
+      closeAllPopups()
     } catch (err) {
       console.log("Не удалось изменить аватар пользователя", err);
     }
   };
 
-  const handleAddPlaceSubmit = async (cardInfo) => {
+  const handleAddPlaceSubmit = async ({name, link, resetForm}) => {
     try {
-      const newCard = await api.postCard(cardInfo);
+      const newCard = await api.postCard({name, link});
       setCards([newCard, ...cards]);
+      resetForm()
+      closeAllPopups()
     } catch (err) {
       console.log("Не удалось добавить карточку", err);
     }

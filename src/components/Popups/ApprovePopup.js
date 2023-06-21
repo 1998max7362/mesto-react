@@ -4,7 +4,6 @@ export const ApprovePopup = ({isOpen,onClose, onApprove}) => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    onClose()
     onApprove()
   }
 
