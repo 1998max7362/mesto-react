@@ -11,6 +11,7 @@ import { EditProfilePopup } from "./components/Popups/EditProfilePopup";
 import { EditAvatarPopup } from "./components/Popups/EditAvatarPopup";
 import { AddPlacePopup } from "./components/Popups/AddPlacePopup";
 import { ApprovePopup } from "./components/Popups/ApprovePopup";
+import { RegistrationPopup } from "./components/Popups/RegistrationPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -58,7 +59,9 @@ function App() {
   };
 
   const handleCardDelete = (card) => {
-    setApproveCallback((oldCallback) => ()=>{handleCardDeleteApproved(card)})
+    setApproveCallback((oldCallback) => () => {
+      handleCardDeleteApproved(card);
+    });
     handleShowApprovePopup(true);
   };
 
@@ -69,7 +72,7 @@ function App() {
         setCards((oldCards) =>
           oldCards.filter((oldCard) => oldCard._id !== card._id)
         );
-        closeAllPopups()
+        closeAllPopups();
       }
     } catch (err) {
       console.log("Не удалось удалить карточку", err);
@@ -80,7 +83,7 @@ function App() {
     try {
       const newUserInfo = await api.patchUserData(userInfo);
       setCurrentUserInfo(newUserInfo);
-      closeAllPopups()
+      closeAllPopups();
     } catch (err) {
       console.log("Не удалось изменить данные пользователя", err);
     }
@@ -90,18 +93,18 @@ function App() {
     try {
       const newUserInfo = await api.updateAvatar(avatarLink);
       setCurrentUserInfo(newUserInfo);
-      closeAllPopups()
+      closeAllPopups();
     } catch (err) {
       console.log("Не удалось изменить аватар пользователя", err);
     }
   };
 
-  const handleAddPlaceSubmit = async ({name, link, resetForm}) => {
+  const handleAddPlaceSubmit = async ({ name, link, resetForm }) => {
     try {
-      const newCard = await api.postCard({name, link});
+      const newCard = await api.postCard({ name, link });
       setCards([newCard, ...cards]);
-      resetForm()
-      closeAllPopups()
+      resetForm();
+      closeAllPopups();
     } catch (err) {
       console.log("Не удалось добавить карточку", err);
     }
@@ -156,8 +159,13 @@ function App() {
   };
 
   return (
-    <div className="body" >
-      <div className="page" onClick={(event)=>{if (event.target.id==='popup') closeAllPopups()} }>
+    <div className="body">
+      <div
+        className="page"
+        onClick={(event) => {
+          if (event.target.id === "popup") closeAllPopups();
+        }}
+      >
         <CurrentUserContext.Provider value={currentUserInfo}>
           <Header />
           <Main
@@ -196,6 +204,11 @@ function App() {
             isOpen={!!Object.keys(selectedCard).length}
             onClose={closeAllPopups}
             card={selectedCard}
+          />
+          <RegistrationPopup
+            name={"registration"}
+            isOpen={true}
+            onClose={closeAllPopups}
           />
         </CurrentUserContext.Provider>
       </div>
