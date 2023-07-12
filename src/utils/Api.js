@@ -1,4 +1,4 @@
-import { url,token } from "./initials";
+import { url, token } from "./initials";
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -66,14 +66,13 @@ class Api {
   }
 
   async changeLikeCardStatus(_id, newLikeStatus) {
-    let res
-    if (newLikeStatus){
+    let res;
+    if (newLikeStatus) {
       res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
         headers: this.headers,
         method: "PUT",
       });
-    }
-    else{
+    } else {
       res = await fetch(`${this.baseUrl}/cards/${_id}/likes`, {
         headers: this.headers,
         method: "DELETE",
@@ -82,12 +81,11 @@ class Api {
     return this._getResposeData(res);
   }
 
-
   async _getResposeData(res) {
     if (res.ok) {
       return await res.json();
     }
-    throw new Error(res.status);
+    throw new Error(res.statusText);
   }
 }
 
@@ -95,6 +93,6 @@ export const api = new Api({
   baseUrl: url,
   headers: {
     authorization: token,
-    'Content-Type': 'application/json'
-  }
+    "Content-Type": "application/json",
+  },
 });

@@ -9,6 +9,7 @@ export const Header = () => {
           src={logo}
           alt="Лого"
         />
+        
       </header>
     )
 }

@@ -3,9 +3,9 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
-import { PopupWithForm } from "./components/Popups/PopupWithForm";
 import { ImagePopup } from "./components/Popups/ImagePopup";
 import { api } from "./utils/Api";
+import { auth } from "./utils/Auth";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import { EditProfilePopup } from "./components/Popups/EditProfilePopup";
 import { EditAvatarPopup } from "./components/Popups/EditAvatarPopup";
@@ -156,7 +156,7 @@ function App() {
   };
 
   return (
-    <div className="body">
+    <div className="body" >
       <div className="page" onClick={(event)=>{if (event.target.id==='popup') closeAllPopups()} }>
         <CurrentUserContext.Provider value={currentUserInfo}>
           <Header />
@@ -191,7 +191,6 @@ function App() {
             onClose={closeAllPopups}
             onAddPlaceSubmit={handleAddPlaceSubmit}
           />
-          ImagePopup
           <ImagePopup
             name={"img"}
             isOpen={!!Object.keys(selectedCard).length}

@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { api } from "../utils/Api";
+import { useContext } from "react";
+import {BrowserRouter, Route, Routes, Navigate, useNavigate} from 'react-router-dom';
 import { Card } from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 
 export const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) => {
   const currentUserInfo = useContext(CurrentUserContext)
