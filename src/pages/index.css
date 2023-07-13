@@ -43,4 +43,6 @@
 @import url(../blocks/img-container/img-container.css);
 @import url(../blocks/img-container/__img/img-container__img.css);
 @import url(../blocks/img-container/__caption/img-container__caption.css);
-@import url(../blocks/registration-response/registration-response.css);
+@import url(../blocks/info-tooltip/info-tooltip.css);
+@import url(../blocks/info-tooltip/__icon/info-tooltip__icon.css);
+@import url(../blocks/info-tooltip/__text/info-tooltip__text.css);

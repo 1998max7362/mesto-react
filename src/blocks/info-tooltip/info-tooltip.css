@@ -1,4 +1,4 @@
-.registration-response{
+.info-tooltip{
     padding: 60px 36px 60px;
     width: clamp(238px,34vw,358px);
     background-color: white;
@@ -6,12 +6,14 @@
     border-radius: 10px;
     color: black;
     cursor: default;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 @media screen and (max-width: 500px){
-    .registration-response{
+    .info-tooltip{
         padding: 50px 22px 50px;
     }
 }

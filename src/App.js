@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
@@ -11,7 +18,9 @@ import { EditProfilePopup } from "./components/Popups/EditProfilePopup";
 import { EditAvatarPopup } from "./components/Popups/EditAvatarPopup";
 import { AddPlacePopup } from "./components/Popups/AddPlacePopup";
 import { ApprovePopup } from "./components/Popups/ApprovePopup";
-import { RegistrationPopup } from "./components/Popups/RegistrationPopup";
+import { InfoTooltip } from "./components/Popups/InfoTooltip";
+import { Login } from "./components/Login";
+import { Register } from "./components/Register";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -168,17 +177,27 @@ function App() {
       >
         <CurrentUserContext.Provider value={currentUserInfo}>
           <Header />
-          <Main
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-            cards={cards}
-          />
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                    cards={cards}
+                  />
+                }
+              />
+              <Route path="/sign-up" element={<Register />} />
+              <Route path="/sign-in" element={<Login />} />
+            </Routes>
+          </BrowserRouter>
           <Footer />
-          <template id="element"></template>
           <ApprovePopup
             isOpen={isApprovePopupOpen}
             onClose={closeAllPopups}
@@ -205,11 +224,11 @@ function App() {
             onClose={closeAllPopups}
             card={selectedCard}
           />
-          <RegistrationPopup
+          {/* <InfoTooltip
             name={"registration"}
             isOpen={true}
             onClose={closeAllPopups}
-          />
+          /> */}
         </CurrentUserContext.Provider>
       </div>
     </div>
