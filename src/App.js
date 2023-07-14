@@ -5,6 +5,8 @@ import {
   Routes,
   Navigate,
   useNavigate,
+  matchRoutes,
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header";
@@ -19,8 +21,7 @@ import { EditAvatarPopup } from "./components/Popups/EditAvatarPopup";
 import { AddPlacePopup } from "./components/Popups/AddPlacePopup";
 import { ApprovePopup } from "./components/Popups/ApprovePopup";
 import { InfoTooltip } from "./components/Popups/InfoTooltip";
-import { Login } from "./components/Login";
-import { Register } from "./components/Register";
+import { Sign } from "./components/Sign";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -176,8 +177,8 @@ function App() {
         }}
       >
         <CurrentUserContext.Provider value={currentUserInfo}>
-          <Header />
           <BrowserRouter>
+            <Header />
             <Routes>
               <Route
                 path="/"
@@ -193,8 +194,20 @@ function App() {
                   />
                 }
               />
-              <Route path="/sign-up" element={<Register />} />
-              <Route path="/sign-in" element={<Login />} />
+              <Route
+                path="/sign-up"
+                element={
+                  <Sign
+                    title={"Регистрация"}
+                    buttonTitle={"Зарегистироваться"}
+                    additionalText={"Уже зарегистрированы? Войти"}
+                  />
+                }
+              />
+              <Route
+                path="/sign-in"
+                element={<Sign title={"Вход"} buttonTitle={"Войти"} />}
+              />
             </Routes>
           </BrowserRouter>
           <Footer />

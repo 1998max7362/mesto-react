@@ -1,4 +1,4 @@
 
 export const Login = () =>{
-    return <div>Логин</div>
+    return <section className="login"></section>
 }
