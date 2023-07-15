@@ -1,13 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Navigate,
-  useNavigate,
-  matchRoutes,
-  useLocation,
-} from "react-router-dom";
+
 import { Header } from "./Header";
 import { Main } from "./Main";
 import { ImagePopup } from "./Popups/ImagePopup";
@@ -20,7 +12,7 @@ import { ApprovePopup } from "./Popups/ApprovePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 
-export const AuthorizedMain = ({setCurrentUserInfo}) => {
+export const AuthorizedMain = ({handleCurrentUserInfoChange,handleTokenCheck}) => {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -29,7 +21,6 @@ export const AuthorizedMain = ({setCurrentUserInfo}) => {
   const [selectedCard, setSelectedCard] = useState({});
 
   const currentUserInfo = useContext(CurrentUserContext);
-  const navigate = useNavigate()
 
   const [cards, setCards] = useState([]);
 
@@ -37,12 +28,12 @@ export const AuthorizedMain = ({setCurrentUserInfo}) => {
     (async () => {
       try {
         const userData = await api.getUserData();
-        setCurrentUserInfo(userData);
+        handleCurrentUserInfoChange(userData);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [setCurrentUserInfo]);
+  }, [handleCurrentUserInfoChange]);
 
   useEffect(() => {
     (async () => {
@@ -91,7 +82,7 @@ export const AuthorizedMain = ({setCurrentUserInfo}) => {
   const handleUpdateUser = async (userInfo) => {
     try {
       const newUserInfo = await api.patchUserData(userInfo);
-      setCurrentUserInfo(newUserInfo);
+      handleCurrentUserInfoChange(newUserInfo);
       closeAllPopups();
     } catch (err) {
       console.log("Не удалось изменить данные пользователя", err);
@@ -101,7 +92,7 @@ export const AuthorizedMain = ({setCurrentUserInfo}) => {
   const handleUpdateAvatar = async (avatarLink) => {
     try {
       const newUserInfo = await api.updateAvatar(avatarLink);
-      setCurrentUserInfo(newUserInfo);
+      handleCurrentUserInfoChange(newUserInfo);
       closeAllPopups();
     } catch (err) {
       console.log("Не удалось изменить аватар пользователя", err);
@@ -170,7 +161,7 @@ export const AuthorizedMain = ({setCurrentUserInfo}) => {
   const onExit = () =>{
     localStorage.removeItem('token');
     setApprovePopupOpen(false)
-    navigate('/sign-in')
+    handleTokenCheck()
   }
 
   const approveExit= () =>{

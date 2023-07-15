@@ -5,7 +5,7 @@ import { Header } from "./Header";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Login = ({setCurrentUserInfo}) => {
+export const Login = ({handleTokenCheck}) => {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
 
@@ -14,8 +14,7 @@ export const Login = ({setCurrentUserInfo}) => {
   const onsubmit = async ({ email, password }) => {
     try {
       await auth.authorize({ email, password });
-      // setCurrentUserInfo({ email })
-      navigate('/')
+      handleTokenCheck()
     } catch (err) {
       console.log(err);
       setInfoTooltipOpen(true);
