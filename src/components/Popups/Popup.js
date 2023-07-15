@@ -1,9 +1,13 @@
-export const Popup = ({name, children, isOpen, onClose}) => {
-  
-
+export const Popup = ({ name, children, isOpen, onClose }) => {
 
   return (
-    <div id="popup" className={`popup popup_type_${name} ${isOpen&&'popup_opened'}`}>
+    <div
+      id="popup"
+      className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}
+      onClick={(event) => {
+        if (event.target.id === "popup") onClose();
+      }}
+    >
       <div className="popup__container">
         <button
           type="button"

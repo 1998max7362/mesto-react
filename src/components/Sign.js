@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { Children } from "react";
 import * as Yup from "yup";
 
 const formAStyle = {
@@ -15,7 +16,7 @@ const inputStyle = {
 };
 
 
-export const Sign = ({ title, buttonTitle, additionalText  }) => {
+export const Sign = ({ title, buttonTitle, children, handleSubmit  }) => {
   const initialValues = {
     email: "",
     password: "",
@@ -32,15 +33,12 @@ export const Sign = ({ title, buttonTitle, additionalText  }) => {
       ),
   });
 
-  const handlenSubmit = (values) => {
-    console.log("values", values);
-    console.log("formik", formik);
-  };
 
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      handlenSubmit(values);
+      // console.log('values',values)
+      handleSubmit(values);
     },
     validationSchema,
     validateOnMount: true,
@@ -104,10 +102,11 @@ export const Sign = ({ title, buttonTitle, additionalText  }) => {
           className={'form__save-button'}
           style={{color:'black',backgroundColor: formik.isValid? 'white':'rgb(255,255,255, 0.4)', marginTop:'180px' }}
           aria-label="Сохранить"
+          disabled = {!formik.isValid}
         >
           {buttonTitle}
         </button>
-        <p className="link" style={{margin: '0', marginTop: '20px',textAlign: 'center'}}>{additionalText}</p>
+        {children}
       </form>
     </section>
   );

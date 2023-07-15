@@ -33,16 +33,13 @@ class Auth {
     }
   }
 
-  async checkTokenValidity() {
-    const token = localStorage.getItem('token');
-    const res = await fetch(`${this.baseUrl}/signin`, {
+  async checkTokenValidity(token) {
+    const res = await fetch(`${this.baseUrl}/users/me`, {
       headers: {...this.headers, "Authorization" : `Bearer ${token}`},
       method: "GET",
     });
     const data = await this._getResposeData(res);
-    if (data.token){
-      localStorage.setItem('token', data.token);
-    }
+    return data
   }
 
   async _getResposeData(res) {
